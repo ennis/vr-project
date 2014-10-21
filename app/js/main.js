@@ -93,6 +93,7 @@ function update(dt) {
   camera.updateProjectionMatrix();
 
   controls.update(dt);
+  window.updateMonsterCrowd(dt);
 }
 
 function render(dt) {
