@@ -1,4 +1,4 @@
-var camera, scene, renderer;
+var camera, renderer;
 var effect, controls;
 var element, container;
 
@@ -15,11 +15,11 @@ function init() {
 
   effect = new THREE.StereoEffect(renderer);
 
-  scene = new THREE.Scene();
+  window.scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
   camera.position.set(0, 10, 0);
-  scene.add(camera);
+  window.scene.add(camera);
 
   controls = new THREE.OrbitControls(camera, element);
   controls.rotateUp(Math.PI / 4);
@@ -48,7 +48,7 @@ function init() {
 
 
   var light = new THREE.HemisphereLight(0x777777, 0x000000, 0.6);
-  scene.add(light);
+  window.scene.add(light);
 
   var texture = THREE.ImageUtils.loadTexture(
     'textures/patterns/checker.png'
@@ -70,7 +70,7 @@ function init() {
 
   var mesh = new THREE.Mesh(geometry, material);
   mesh.rotation.x = -Math.PI / 2;
-  scene.add(mesh);
+  window.scene.add(mesh);
 
   window.addEventListener('resize', resize, false);
   setTimeout(resize, 1);
@@ -96,7 +96,7 @@ function update(dt) {
 }
 
 function render(dt) {
-  effect.render(scene, camera);
+  effect.render(window.scene, camera);
 }
 
 function animate(t) {
