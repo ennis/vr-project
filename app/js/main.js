@@ -91,8 +91,8 @@ function update(dt) {
   resize();
 
   cube.rotation.x += 0.02;
-  cube.position.y += dt * 0.01;
-  cube.position.z += dt * 0.01;
+  cube.position.y += dt * 0.5;
+  cube.position.z += dt * 0.5;
   camera.updateProjectionMatrix();
 
   controls.update(dt);
