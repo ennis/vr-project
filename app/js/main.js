@@ -110,6 +110,7 @@ function update(dt) {
   sky.setTimeOfDay((8.0 + 0.2 * elapsed) % 24.0);
 
   controls.update(dt);
+  window.updateMonsterCrowd(dt);
 }
 
 function render(dt) {
