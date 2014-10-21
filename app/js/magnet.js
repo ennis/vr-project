@@ -1,43 +1,50 @@
-var Magnet = function (threshold) {
-    this.alpha = 0;
-    this.beta = 0;
-    this.gamma = 0;
-    this.abs = 0;
-    this.threshold = typeof threshold !== 'undefined' ? threshold : 1;
+var Magnet = function () {
+    this.accelX = 0,
+    this.accelY = 0,
+    this.accelZ = 0,
+    this.jerkX = 0,
+    this.jerkY = 0,
+    this.jerkZ = 0,
+    this.jerkBigX = 0,
+    this.jerkBigY = 0,
+    this.jerkBigZ = 0;
+}
 
-    this.previousN = 0;
-    this.n = this.norm(this.alpha, this.beta, this.gamma);
+Magnet.prototype.update = function (newAccelX, newAccelY, newAccelZ) {
+    this.jerkX = newAccelX?(newAccelX - this.accelX).toFixed(4):0;
+    this.jerkBigX = Math.abs(this.jerkX);
+    this.jerkY = newAccelY?(newAccelY - this.accelY).toFixed(4):0;
+    this.jerkBigY = Math.abs(this.jerkY);
+    this.jerkZ = newAccelZ?(newAccelZ - this.accelZ).toFixed(4):0;
+    this.jerkBigZ = Math.abs(this.jerkZ);
+
+    this.accelX = newAccelX?newAccelX.toFixed(4):0;
+    this.accelY = newAccelY?newAccelY.toFixed(4):0;
+    this.accelZ = newAccelZ?newAccelZ.toFixed(4):0;
 }
 
 Magnet.prototype.hasChanged = function () {
-    return (abs(this.previousN - this.n) >= this.threshold);
-}
+    function f (val, max) {
+        if (max < 1) {
+            return false;
+        }
 
-Magnet.prototype.norm = function () {
-    var squaredNorm = this.alpha * this.alpha + this.beta * this.beta + this.gamma * this.gamma;
+        if (max > val) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    return (Math.sqrt(squaredNorm));
-}
-
-Magnet.prototype.compute = function () {
-    this.previousN = this.n;
-    this.n = this.norm(this.alpha, this.beta, this.gamma);
+    return (f(this.jerkX, this.jerkBigX) || f(this.jerkY, this.jerkBigY) || f(this.jerkZ, this.jerkBigZ));
 }
 
 var magnet = new Magnet();
 
-window.addEventListener('deviceorientation', function(evt){
-    magnet.alpha = evt.alpha;
-    magnet.beta = evt.beta;
-    magnet.gamma = evt.gamma;
+window.addEventListener('devicemotion', function (e) {
+    magnet.update(e.acceleration.x, e.acceleration.y, e.acceleration.z);
 
-    magnet.abs = evt.absolute;
-
-    console.log(magnet.n.toString());
-    magnet.compute();
-    if (magnet.hasChanged()) {
-        console.log("changed");
-        cube.material.color.setHex(0x0000ff);
-    }
-}, true);
+    // We can now use magnet.hasChanged() to know
+    // if the phone moves a little
+});
 
