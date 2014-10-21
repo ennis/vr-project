@@ -3,6 +3,8 @@ var effect, controls;
 var element, container;
 
 var clock = new THREE.Clock();
+var sky;
+var elapsed = 0.0;
 
 init();
 animate();
@@ -17,7 +19,11 @@ function init() {
 
   window.scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
+  sky = new THREE.Sky();
+  sky.setTimeOfDay(14.0);
+  window.scene.add(sky.mesh);
+
+  camera = new THREE.PerspectiveCamera(90, 1, 0.5, 2000000);
   camera.position.set(0, 10, 0);
   window.scene.add(camera);
 
@@ -74,6 +80,7 @@ function init() {
 
   window.addEventListener('resize', resize, false);
   setTimeout(resize, 1);
+  //elapsed = 0.0;
 }
 
 function resize() {
@@ -87,13 +94,20 @@ function resize() {
   effect.setSize(width, height);
 }
 
+
 function update(dt) {
+  elapsed += dt;
+
   resize();
 
-  cube.rotation.x += 0.02;
+  /*cube.rotation.x += 0.02;
   cube.position.y += dt * 0.01;
-  cube.position.z += dt * 0.01;
+  cube.position.z += dt * 0.01;*/
   camera.updateProjectionMatrix();
+
+  // update sky
+  // 1 second => 0.2 hour
+  sky.setTimeOfDay((8.0 + 0.2 * elapsed) % 24.0);
 
   controls.update(dt);
 }
