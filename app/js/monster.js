@@ -14,8 +14,14 @@
 
     window.scene.add(this.mesh);
   };
-
+  Monster.prototype.isTouchingPlayer = function() {
+    var epsilon = 0.001;
+    return (this.mesh.position.lengthSq() < epsilon);
+  };
   Monster.prototype.constructor = Monster;
+  Monster.prototype.changeColor = function() {
+    this.mesh.material.color = new THREE.Color(0xff0000);
+  };
   Monster.prototype.update = function(dt) {
     var playerToMonster = new THREE.Vector3()
       .copy(this.mesh.position)
@@ -25,8 +31,9 @@
       .copy(this.mesh.position)
       .sub(playerToMonster.multiplyScalar(dt*monsterSpeed));
 
-    console.log(newMonsterPosition);
     this.mesh.position.copy(newMonsterPosition);
+
+    return this.isTouchingPlayer();
   };
 
 

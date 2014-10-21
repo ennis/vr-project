@@ -22,8 +22,12 @@
   var timeSinceLastMonsterPop = 0;
 
   var updateMonsterCrowd = function (dt) {
+    var hasReachedPlayer;
     monsterCrowd.forEach(function (monster) {
-      monster.update(dt);
+      hasReachedPlayer = monster.update(dt);
+      if (hasReachedPlayer) {
+        monster.changeColor();
+      }
     });
 
     if (haveToCreateMonster(dt)) {
