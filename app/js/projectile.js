@@ -21,12 +21,11 @@ Projectile.prototype.remove = function () {
 
 Projectile.prototype.update = function (dt) {
     // TODO
-    var newPos = this.dir;
-    // newPos.multiplyScalar(dt);
-    // console.log(newPos);
-    // this.pos.addVectors(newPos);
+    var newPos = this.dir.clone();
+    newPos.multiplyScalar(dt * this.speed);
+    this.pos.add(newPos);
 
-    // this.mesh.position = this.pos;
+    this.mesh.position.add(this.pos);
 }
 
 var projectiles = [];
