@@ -48,3 +48,27 @@ window.addEventListener('devicemotion', function (e) {
     // if the phone moves a little
 });
 
+// TODO: put the function at the bottom in the 'devicemotion' listener
+document.addEventListener('keypress', function (e) {
+    var c = e.key;
+
+    if (c === 's') {
+        var pos = camera.position;
+        // console.log(pos);
+
+        var lookVector = new THREE.Vector3(0, 0, -1);
+        lookVector.applyQuaternion(camera.quaternion);
+        // console.log(lookVector);
+
+        var projectile = new Projectile();
+        projectile.set(pos, lookVector);
+        projectiles.push(projectile);
+
+        scene.add(projectile.mesh);
+    } else if (c === 'r') {
+        for (var i = 0; i < projectiles.length; ++i) {
+            projectiles[i].remove();
+        }
+    }
+});
+
