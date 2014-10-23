@@ -90,12 +90,6 @@ function resize() {
 function update(dt) {
   resize();
 
-  // Update monsters
-  // TODO
-  cube.rotation.x += 0.02;
-  cube.position.y += dt * 0.5;
-  cube.position.z += dt * 0.5;
-
   // Update projectiles
   for (var i = 0; i < projectiles.length; ++i) {
       projectiles[i].update(dt);

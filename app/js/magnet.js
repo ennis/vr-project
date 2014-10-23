@@ -50,7 +50,7 @@ window.addEventListener('devicemotion', function (e) {
 
 // TODO: put the function at the bottom in the 'devicemotion' listener
 document.addEventListener('keypress', function (e) {
-    var c = e.key;
+    var c = String.fromCharCode(e.charCode);
 
     if (c === 's') {
         var pos = camera.position;
@@ -71,4 +71,3 @@ document.addEventListener('keypress', function (e) {
         }
     }
 });
-
