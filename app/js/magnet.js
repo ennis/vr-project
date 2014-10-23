@@ -58,6 +58,7 @@ document.addEventListener('keypress', function (e) {
 
         var lookVector = new THREE.Vector3(0, 0, -1);
         lookVector.applyQuaternion(camera.quaternion);
+        lookVector.normalize();
         // console.log(lookVector);
 
         var projectile = new Projectile();
