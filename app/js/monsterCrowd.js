@@ -36,14 +36,15 @@
   };
 
   var bulletInCrowd = function (bullet) {
-    bullet.geometry.computeBoundingBox();
-
     bullet.geometry.computeBoundingSphere();
+    var bulletPositionedBoundingSphere = bullet.geometry.boundingSphere.clone();
+    bulletPositionedBoundingSphere.center = bullet.position;
+
     var intersectMonster = false;
     for (var i = monsterCrowd.length - 1; i >= 0; i--) {
       // loop backward for deleting objects on the fly
       var monster = monsterCrowd[i];
-      if (monster.intersectsBullet(bullet)) {
+      if (monster.intersectsSphere(bulletPositionedBoundingSphere)) {
         monsterCrowd.splice(i, 1);
         monster.remove();
         intersectMonster = true;

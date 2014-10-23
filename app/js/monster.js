@@ -23,14 +23,13 @@
     window.scene.remove(this.mesh);
   };
 
-  Monster.prototype.intersectsBullet = function(bullet) {
+  Monster.prototype.intersectsSphere = function(sphere) {
     this.mesh.geometry.computeBoundingSphere();
     var monsterBoundingSphere = this.mesh.geometry.boundingSphere;
-    var positionedBoundingSphere = new THREE.Sphere().copy(monsterBoundingSphere);
+    var positionedBoundingSphere = monsterBoundingSphere.clone();
     positionedBoundingSphere.center = this.mesh.position;
 
-    var bulletBoundingSphere = bullet.geometry.boundingSphere;
-    return positionedBoundingSphere.intersectsSphere(bulletBoundingSphere);
+    return positionedBoundingSphere.intersectsSphere(sphere);
   };
   Monster.prototype.constructor = Monster;
   Monster.prototype.changeColor = function() {
