@@ -6,6 +6,9 @@ var clock = new THREE.Clock();
 var sky;
 var elapsed = 0.0;
 
+var daBullet = new THREE.Mesh( new THREE.BoxGeometry( 4, 4, 4 ),
+                               new THREE.MeshBasicMaterial(0));
+
 init();
 animate();
 
@@ -116,6 +119,7 @@ function update(dt) {
 
   controls.update(dt);
   window.updateMonsterCrowd(dt);
+  window.bulletInCrowd(daBullet);
 }
 
 function render(dt) {
