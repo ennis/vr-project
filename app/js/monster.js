@@ -1,5 +1,5 @@
 (function() {
-  var monsterGeometry = new THREE.BoxGeometry( 2, 2, 2 );
+  var monsterGeometry = new THREE.BoxGeometry( 6, 6, 6 );
   var popDistance = 200;
   var monsterSpeed = 10;
 

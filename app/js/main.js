@@ -6,9 +6,6 @@ var clock = new THREE.Clock();
 var sky;
 var elapsed = 0.0;
 
-var daBullet = new THREE.Mesh( new THREE.BoxGeometry( 4, 4, 4 ),
-                               new THREE.MeshBasicMaterial(0));
-
 init();
 animate();
 
@@ -103,13 +100,6 @@ function update(dt) {
 
   resize();
 
-  // Update projectiles
-  for (var i = projectiles.length -1; i >= 0; i--) {
-    if (projectiles[i].update(dt)) {
-      // projectile went too far, remove it
-      projectiles.slice(i, 1);
-    }
-  }
 
   camera.updateProjectionMatrix();
 
@@ -119,7 +109,14 @@ function update(dt) {
 
   controls.update(dt);
   window.updateMonsterCrowd(dt);
-  window.bulletInCrowd(daBullet);
+  // Update projectiles
+  for (var i = projectiles.length -1; i >= 0; i--) {
+    window.bulletInCrowd(projectiles[i].mesh);
+    if (projectiles[i].update(dt)) {
+      // projectile went too far, remove it
+      projectiles.slice(i, 1);
+    }
+  }
 }
 
 function render(dt) {
