@@ -100,9 +100,14 @@ function update(dt) {
 
   resize();
 
-  /*cube.rotation.x += 0.02;
-  cube.position.y += dt * 0.01;
-  cube.position.z += dt * 0.01;*/
+  // Update projectiles
+  for (var i = projectiles.length -1; i >= 0; i--) {
+    if (projectiles[i].update(dt)) {
+      // projectile went too far, remove it
+      projectiles.slice(i, 1);
+    }
+  }
+
   camera.updateProjectionMatrix();
 
   // update sky
