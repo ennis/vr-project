@@ -19,6 +19,19 @@
     var epsilon = 0.1;
     return (this.mesh.position.lengthSq() < epsilon);
   };
+  Monster.prototype.remove = function() {
+    window.scene.remove(this.mesh);
+  };
+
+  Monster.prototype.intersectsBullet = function(bullet) {
+    this.mesh.geometry.computeBoundingSphere();
+    var monsterBoundingSphere = this.mesh.geometry.boundingSphere;
+    var positionedBoundingSphere = new THREE.Sphere().copy(monsterBoundingSphere);
+    positionedBoundingSphere.center = this.mesh.position;
+
+    var bulletBoundingSphere = bullet.geometry.boundingSphere;
+    return positionedBoundingSphere.intersectsSphere(bulletBoundingSphere);
+  };
   Monster.prototype.constructor = Monster;
   Monster.prototype.changeColor = function() {
     this.mesh.material.color = new THREE.Color(0xff0000);

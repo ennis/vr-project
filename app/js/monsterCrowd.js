@@ -35,5 +35,23 @@
     };
   };
 
+  var bulletInCrowd = function (bullet) {
+    bullet.geometry.computeBoundingBox();
+
+    bullet.geometry.computeBoundingSphere();
+    var intersectMonster = false;
+    for (var i = monsterCrowd.length - 1; i >= 0; i--) {
+      // loop backward for deleting objects on the fly
+      var monster = monsterCrowd[i];
+      if (monster.intersectsBullet(bullet)) {
+        monsterCrowd.splice(i, 1);
+        monster.remove();
+        intersectMonster = true;
+      }
+    };
+    return intersectMonster;
+  };
+
   window.updateMonsterCrowd = updateMonsterCrowd;
+  window.bulletInCrowd = bulletInCrowd;
 }());
