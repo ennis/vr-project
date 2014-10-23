@@ -1,8 +1,8 @@
 var Projectile = function (speed) {
     this.dir = new THREE.Vector3(0, 0, 0);
     this.pos = new THREE.Vector3(0, 0, 0);
-    this.speed = 50;
-    this.mesh = typeof speed !== 'undefined' ? speed : 0.1;
+    this.speed = typeof speed !== 'undefined' ? speed : 50;
+    this.mesh = null;
 }
 
 Projectile.prototype.set = function (pos, dir) {
@@ -23,8 +23,6 @@ Projectile.prototype.isTooFar = function () {
 }
 
 Projectile.prototype.update = function (dt) {
-    // TODO
-
     var newPos = this.dir.clone();
     newPos.multiplyScalar(dt * this.speed);
     this.pos.add(newPos);
