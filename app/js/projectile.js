@@ -18,6 +18,9 @@ Projectile.prototype.set = function (pos, dir) {
 Projectile.prototype.remove = function () {
     scene.remove(this.mesh);
 }
+Projectile.prototype.isTooFar = function () {
+  return this.pos.lengthSq() > 10000;
+}
 
 Projectile.prototype.update = function (dt) {
     // TODO
@@ -27,6 +30,11 @@ Projectile.prototype.update = function (dt) {
     this.pos.add(newPos);
 
     this.mesh.position.copy(this.pos);
+    if (this.isTooFar()) {
+        this.remove();
+        return true;
+    }
+    return false;
 }
 
 var projectiles = [];

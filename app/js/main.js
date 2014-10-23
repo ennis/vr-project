@@ -91,8 +91,11 @@ function update(dt) {
   resize();
 
   // Update projectiles
-  for (var i = 0; i < projectiles.length; ++i) {
-      projectiles[i].update(dt);
+  for (var i = projectiles.length -1; i >= 0; i--) {
+    if (projectiles[i].update(dt)) {
+      // projectile went too far, remove it
+      projectiles.slice(i, 1);
+    }
   }
 
   camera.updateProjectionMatrix();
