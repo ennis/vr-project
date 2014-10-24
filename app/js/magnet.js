@@ -46,6 +46,21 @@ window.addEventListener('devicemotion', function (e) {
 
     // We can now use magnet.hasChanged() to know
     // if the phone moves a little
+    if (magnet.hasChanged()) {
+        var pos = camera.position;
+        // console.log(pos);
+
+        var lookVector = new THREE.Vector3(0, 0, -1);
+        lookVector.applyQuaternion(camera.quaternion);
+        lookVector.normalize();
+        // console.log(lookVector);
+
+        var projectile = new Projectile();
+        projectile.set(pos, lookVector);
+        projectiles.push(projectile);
+
+        scene.add(projectile.mesh);
+    }
 });
 
 // TODO: put the function at the bottom in the 'devicemotion' listener
