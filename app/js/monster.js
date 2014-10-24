@@ -1,12 +1,17 @@
 (function() {
-  var monsterGeometry = new THREE.BoxGeometry( 6, 6, 6 );
   var popDistance = 200;
   var monsterSpeed = 10;
+  var monsterGeometry = null;
+
+  var setMonsterGeometry = function(geometry) {
+    monsterGeometry = geometry;
+  };
 
   var Monster = function() {
     var monsterMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
 
     this.mesh = new THREE.Mesh( monsterGeometry, monsterMaterial );
+
     var randomAngle = Math.random() * Math.PI * 2;
     var xCoord = Math.cos(randomAngle)*popDistance;
     var zCoord = Math.sin(randomAngle)*popDistance;
@@ -56,5 +61,6 @@
 
 
   window.Monster = Monster;
+  window.setMonsterGeometry = setMonsterGeometry;
 
 }());

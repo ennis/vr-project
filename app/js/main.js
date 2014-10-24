@@ -6,8 +6,18 @@ var clock = new THREE.Clock();
 var sky;
 var elapsed = 0.0;
 
-init();
-animate();
+loadAssets(function() {
+  init();
+  animate();
+});
+
+function loadAssets(callback) {
+  var loader = new THREE.JSONLoader();
+  loader.load('../assets/zombie_fast.js', function(geometry) {
+    window.setMonsterGeometry(new THREE.BoxGeometry( 6, 6, 6 ));
+    callback(null);
+  });
+};
 
 function init() {
   renderer = new THREE.WebGLRenderer();
@@ -114,7 +124,7 @@ function update(dt) {
     window.bulletInCrowd(projectiles[i].mesh);
     if (projectiles[i].update(dt)) {
       // projectile went too far, remove it
-      projectiles.slice(i, 1);
+      projectiles.splice(i, 1);
     }
   }
 }
