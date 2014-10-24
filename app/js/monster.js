@@ -8,7 +8,7 @@
   };
 
   var Monster = function() {
-    var monsterMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    var monsterMaterial = new THREE.MeshLambertMaterial( {color: 0x00ff00} );
 
     this.mesh = new THREE.Mesh( monsterGeometry, monsterMaterial );
 

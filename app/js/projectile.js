@@ -9,8 +9,8 @@ Projectile.prototype.set = function (pos, dir) {
   this.pos.copy(pos);
   this.dir.copy(dir);
 
-    var geometry = new THREE.SphereGeometry( 1, 32, 32 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var geometry = new THREE.SphereGeometry( 1, 8, 8 );
+    var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.position = pos;
 }
@@ -19,7 +19,7 @@ Projectile.prototype.remove = function () {
     scene.remove(this.mesh);
 }
 Projectile.prototype.isTooFar = function () {
-  return this.pos.lengthSq() > 10000;
+  return this.pos.lengthSq() > 50000;
 }
 
 Projectile.prototype.update = function (dt) {
