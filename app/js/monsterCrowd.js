@@ -48,6 +48,7 @@
         monsterCrowd.splice(i, 1);
         monster.remove();
         intersectMonster = true;
+        score.update();
       }
     };
     return intersectMonster;

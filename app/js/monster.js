@@ -37,6 +37,7 @@
   };
   Monster.prototype.update = function(dt) {
     if (this.isTouchingPlayer()) {
+      score.reset();
       return true;
     }
 

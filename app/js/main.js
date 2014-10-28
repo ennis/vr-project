@@ -80,7 +80,9 @@ function init() {
 
   window.addEventListener('resize', resize, false);
   setTimeout(resize, 1);
-  //elapsed = 0.0;
+
+  // score
+  score.makeContainers(container);
 }
 
 function resize() {
@@ -120,6 +122,7 @@ function update(dt) {
 }
 
 function render(dt) {
+  score.render();
   effect.render(window.scene, camera);
 }
 
