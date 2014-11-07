@@ -28,6 +28,7 @@ function init() {
   camera = new THREE.PerspectiveCamera(90, 1, 0.5, 2000000);
   camera.position.set(0, 10, 0);
   window.scene.add(camera);
+  window.scene.fog = new THREE.Fog( 0xffffff, 1, 100 );
 
   controls = new THREE.OrbitControls(camera, element);
   controls.rotateUp(Math.PI / 4);
@@ -54,7 +55,7 @@ function init() {
   window.addEventListener('deviceorientation', setOrientationControls, true);
 
 
-  //window.scene.add(hemisphereLight);
+  window.scene.add(hemisphereLight);
   window.scene.add(directionalLight);
 
   var grass_c = THREE.ImageUtils.loadTexture('textures/patterns/grasstile_c.jpg');
