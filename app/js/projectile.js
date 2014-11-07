@@ -9,8 +9,8 @@ Projectile.prototype.set = function (pos, dir) {
   this.pos.copy(pos);
   this.dir.copy(dir);
 
-    var geometry = new THREE.SphereGeometry( 1, 32, 32 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var geometry = new THREE.SphereGeometry( 1, 8, 6 );
+    var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.position = pos;
 }

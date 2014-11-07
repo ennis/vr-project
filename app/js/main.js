@@ -5,6 +5,8 @@ var element, container;
 var clock = new THREE.Clock();
 var sky;
 var elapsed = 0.0;
+var hemisphereLight = new THREE.HemisphereLight(0x777777, 0x000000, 0.6);
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 
 init();
 animate();
@@ -47,29 +49,30 @@ function init() {
     controls.update();
 
     element.addEventListener('click', fullscreen, false);
-
     window.removeEventListener('deviceorientation', setOrientationControls);
   }
   window.addEventListener('deviceorientation', setOrientationControls, true);
 
 
-  var light = new THREE.HemisphereLight(0x777777, 0x000000, 0.6);
-  window.scene.add(light);
+  //window.scene.add(hemisphereLight);
+  window.scene.add(directionalLight);
 
-  var texture = THREE.ImageUtils.loadTexture(
-    'textures/patterns/checker.png'
-  );
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat = new THREE.Vector2(50, 50);
-  texture.anisotropy = renderer.getMaxAnisotropy();
+  var grass_c = THREE.ImageUtils.loadTexture('textures/patterns/grasstile_c.jpg');
+  var grass_n = THREE.ImageUtils.loadTexture('textures/patterns/grasstile_n.jpg');
+  grass_c.wrapS = THREE.RepeatWrapping;
+  grass_c.wrapT = THREE.RepeatWrapping;
+  grass_c.repeat = new THREE.Vector2(50, 50);
+  grass_n.wrapS = THREE.RepeatWrapping;
+  grass_n.wrapT = THREE.RepeatWrapping;
+  grass_n.repeat = new THREE.Vector2(50, 50);
 
   var material = new THREE.MeshPhongMaterial({
     color: 0xffffff,
     specular: 0xffffff,
-    shininess: 20,
+    shininess: 2,
     shading: THREE.FlatShading,
-    map: texture
+    map: grass_c,
+    normalMap: grass_n
   });
 
   var geometry = new THREE.PlaneGeometry(1000, 1000);
@@ -99,16 +102,13 @@ function resize() {
 
 function update(dt) {
   elapsed += dt;
-
   resize();
-
-
   camera.updateProjectionMatrix();
-
   // update sky
   // 1 second => 0.2 hour
-  sky.setTimeOfDay((8.0 + 0.2 * elapsed) % 24.0);
-
+  var lightDir = sky.setTimeOfDay((8.0 + 0.2 * elapsed) % 24.0);
+  //console.log(lightDir);
+  directionalLight.position.set(new THREE.Vector3(1, 1, 1));
   controls.update(dt);
   window.updateMonsterCrowd(dt);
   // Update projectiles
