@@ -108,7 +108,7 @@ function update(dt) {
   // 1 second => 0.2 hour
   var lightDir = sky.setTimeOfDay((8.0 + 0.2 * elapsed) % 24.0);
   //console.log(lightDir);
-  directionalLight.position.set(new THREE.Vector3(1, 1, 1));
+  directionalLight.position.set(1, 1, 1);
   controls.update(dt);
   window.updateMonsterCrowd(dt);
   // Update projectiles
