@@ -2,10 +2,19 @@
   var monsterCrowd = [];
   var monsterSpawnInterval = 5;
   var timeSinceLastMonsterPop = 0;
+  var initialTime = new Date();
+
+  var complexityBonus = function(timeElapsed, maxComplexity) {
+    var levelLast = 30000;
+    var complexityFactor = 0.7; //every level, they pop 0.7 seconds faster
+    var currentLevel = Math.floor(timeElapsed / levelLast);
+    return Math.min(currentLevel * complexityFactor, maxComplexity);
+  };
 
   var haveToCreateMonster = function(dt) {
     timeSinceLastMonsterPop += dt;
-    if (timeSinceLastMonsterPop > monsterSpawnInterval) {
+    var timeElapsed = new Date() - initialTime;
+    if ((timeSinceLastMonsterPop + complexityBonus(timeElapsed, monsterSpawnInterval - 1)) > monsterSpawnInterval) {
       timeSinceLastMonsterPop = 0;
       return true;
     }
