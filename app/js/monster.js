@@ -4,7 +4,7 @@
   var monsterSpeed = 10;
 
   var Monster = function() {
-    var monsterMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    var monsterMaterial = new THREE.MeshLambertMaterial( {color: 0x00ff00} );
 
     this.mesh = new THREE.Mesh( monsterGeometry, monsterMaterial );
     var randomAngle = Math.random() * Math.PI * 2;
@@ -37,6 +37,7 @@
   };
   Monster.prototype.update = function(dt) {
     if (this.isTouchingPlayer()) {
+      score.reset();
       return true;
     }
 

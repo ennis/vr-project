@@ -271,25 +271,21 @@ THREE.Sky.prototype.setTimeOfDay = function(hour) {
 	var sunset = 19.0;
 	var sunny_time = sunset - sunrise;
 	var night_time = 24 - sunny_time;
-
 	var night = (hour - sunrise) < sunny_time;
 	var theta;
-
 	if (!night) {
 		theta = Math.PI * (hour - sunrise) / sunny_time;
 	} else {
 		// 0.5 to 1
 		theta = 2 * Math.PI * (0.5 + (hour - sunset) / night_time);
 	}
-
-	// var theta = Math.PI * (effectController.inclination - 0.5);
-	// var phi = 2 * Math.PI * (effectController.azimuth - 0.5);
-
 	var phi = 2 * Math.PI * (-0.1);
-
-	// update uniforms
 	this.uniforms.sunPosition.value.x = this.distance * Math.cos(phi);
 	this.uniforms.sunPosition.value.y = this.distance * Math.sin(phi) * Math.sin(theta); 
 	this.uniforms.sunPosition.value.z = this.distance * Math.sin(phi) * Math.cos(theta); 
+	return new THREE.Vector3(
+		Math.cos(phi), 
+		Math.sin(phi) * Math.sin(theta), 
+		Math.sin(phi) * Math.cos(theta)).normalize();
 };
 
